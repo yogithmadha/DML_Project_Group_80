@@ -1,0 +1,20 @@
+@echo off
+
+rem Specify the files you want to stash within the "val" and "train" folders
+set files_to_stash=val\file1 city_val\file2 train\file3 city_train\file4
+rem Stage the files
+git add %files_to_stash%
+
+rem Check if there are changes to stash
+git diff --quiet --staged
+if %errorlevel% neq 0 (
+    rem Stash changes but keep the staged files
+    git stash --keep-index
+
+    rem Optionally, you can add a commit message
+    rem git commit -m "Stashing changes for specific files: %files_to_stash%"
+) else (
+    echo No changes to stash.
+)
+
+pause
